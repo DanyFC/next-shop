@@ -1,14 +1,18 @@
-import { montserrat } from "@/config/fonts"
-import Image from "next/image"
-import Link from "next/link"
+import { montserrat } from "@/config/fonts";
+import Image from "next/image";
+import Link from "next/link";
 
-const NotFoundPage = () => {
+interface Props {
+  message?: string;
+}
+
+const NotFoundPage = ({ message = 'Woops something goes wrong!!' }: Props) => {
   return (
     <div className="flex flex-col-reverse md:flex-row h-[800px] w-full justify-center items-center align-middle">
       <div className="text-center px-5 mx-5">
         <h2 className={`${montserrat.className} antialiased text-9xl`}>404</h2>
 
-        <p className="font-semibold text-xl">Woops something goes wrong!!</p>
+        <p className="font-semibold text-xl">{message}</p>
 
         <p className="font-light">You can go back to
           <Link
