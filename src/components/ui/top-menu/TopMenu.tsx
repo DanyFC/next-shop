@@ -19,17 +19,17 @@ const TopMenu = () => {
       <div className="hidden sm:block">
         <Link
           className="m-w p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/category/mens"
+          href="/category/men"
         >Mens</Link>
 
         <Link
           className="m-w p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/category/womens"
+          href="/category/women"
         >Womens</Link>
 
         <Link
           className="m-w p-2 rounded-md transition-all hover:bg-gray-100"
-          href="/category/kids"
+          href="/category/kid"
         >Kids</Link>
       </div>
 
