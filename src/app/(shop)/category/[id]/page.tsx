@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { Grid, Title } from "@/components";
+import { initialData } from "@/seed/seed";
 
 interface Props {
   params: Promise<{
@@ -6,14 +7,23 @@ interface Props {
   }>
 }
 
+const products = initialData.products
+
 export default async function CategoryPage({ params }: Props) {
   const { id } = await params
 
-  if (id === 'kids') notFound()
+  const productsByCat = products.filter(product => (product.gender === id))
+
+  // if (id === 'kids') notFound()
 
   return (
     <div>
-      <h1>Category Page {id}</h1>
+      <Title
+        className="mb-2"
+        subtitle={`All the products for ${id}s`}
+        title={`${id.charAt(0).toUpperCase()}${id.slice(1)}s`}
+      />
+      <Grid products={productsByCat} />
     </div>
   );
 }
