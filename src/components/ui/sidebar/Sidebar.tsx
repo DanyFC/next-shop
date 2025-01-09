@@ -70,7 +70,7 @@ const Sidebar = () => {
       }
 
       <nav className={clsx(
-        "fixed p-5 right-0 top-0 w-96 h-screen bg-white z-20 shadow-2xl transform transition-all duration-300 overflow-y-scroll",
+        "fixed p-5 right-0 top-0 w-72 sm:w-96 h-screen bg-white z-20 shadow-2xl transform transition-all duration-300 overflow-y-scroll",
         { "translate-x-full": !isSidebarOpen }
       )}>
         <IoCloseOutline
