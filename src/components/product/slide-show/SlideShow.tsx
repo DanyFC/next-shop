@@ -33,7 +33,7 @@ const SlideShow = ({ className = '', images, title }: Props) => {
         spaceBetween={10}
         navigation={true}
         thumbs={{
-          swiper: thumbsSwiper
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null
         }}
         autoplay={{ delay: 2500 }}
         modules={[FreeMode, Navigation, Thumbs, Autoplay]}
