@@ -16,11 +16,11 @@ export default async function ProductPage({ params }: Props) {
   if (!product) notFound()
 
   return (
-    <div className="mt-5 mb-20 grid grid-cols-1 md:grid-cols-3 gap-3">
-      <div className="col-span-1 md:col-span-2">
-        <SlideShowMobile images={product.images} title={product.title} className="block md:hidden" />
+    <div className="mt-5 mb-20 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="col-span-1 sm:col-span-2">
+        <SlideShowMobile images={product.images} title={product.title} className="block sm:hidden" />
 
-        <SlideShow images={product.images} title={product.title} className="hidden md:block"/>
+        <SlideShow images={product.images} title={product.title} className="hidden sm:block"/>
       </div>
 
       <div className="col-span-1 px-5 ">

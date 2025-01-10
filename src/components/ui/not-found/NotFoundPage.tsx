@@ -8,7 +8,7 @@ interface Props {
 
 const NotFoundPage = ({ message = 'Woops something goes wrong!!' }: Props) => {
   return (
-    <div className="flex flex-col-reverse md:flex-row h-[800px] w-full justify-center items-center align-middle">
+    <div className="flex flex-col-reverse sm:flex-row h-[800px] w-full justify-center items-center align-middle">
       <div className="text-center px-5 mx-5">
         <h2 className={`${montserrat.className} antialiased text-9xl`}>404</h2>
 
