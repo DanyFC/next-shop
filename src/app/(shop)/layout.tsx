@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { Sidebar, TopMenu } from "@/components";
+import { Footer, Sidebar, TopMenu } from "@/components";
 
 export const metadata: Metadata = {
   title: 'Next-Shop',
@@ -21,6 +21,8 @@ export default function ShopLayout({
       <div className="px-0 sm:px-10">
         {children}
       </div>
+
+      <Footer />
     </div>
   );
 }

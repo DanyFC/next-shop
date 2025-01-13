@@ -1,12 +1,13 @@
 import Link from "next/link";
+import { IoCartOutline } from "react-icons/io5";
 
 import { CartItem, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 
 const productsInCart = [
-  initialData.products[2],
-  initialData.products[4],
-  initialData.products[5],
+  // initialData.products[5],
+  // initialData.products[6],
+  // initialData.products[7],
 ]
 
 export default function CartPage() {
@@ -21,12 +22,22 @@ export default function CartPage() {
 
             <Link
               href="/"
-              className="underline mb-5"
+              className="underline mb-5 text-blue-700"
             >Continue shopping</Link>
 
 
             {
               productsInCart.map(product => (<CartItem key={product.slug} product={product} />))
+            }
+
+            {
+              !productsInCart.length && (
+                <div className="flex flex-col w-full items-center justify-center py-4">
+                  <IoCartOutline size={100} color="#4d4d4d" />
+
+                  <p>The cart is empty</p>
+                </div>
+              )
             }
           </div>
 
