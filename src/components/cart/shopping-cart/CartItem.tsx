@@ -2,13 +2,16 @@ import Image from "next/image";
 
 import { QuantitySelector } from "@/components";
 import { Product } from "@/interfaces";
+import { clsx } from 'clsx';
 import { IoTrashOutline } from "react-icons/io5";
 
 interface Props {
+  disabledUi?: boolean;
   product: Product;
+  quantity?: number;
 }
 
-const CartItem = ({ product }: Props) => {
+const CartItem = ({ disabledUi = false, product, quantity = 0 }: Props) => {
   return (
     <div className="flex justify-between mb-5 pb-4 border-b-gray-300 border-b-2">
       <div className="flex">
@@ -19,23 +22,33 @@ const CartItem = ({ product }: Props) => {
           height={100}
           className="mr-5 rounded shadow-sm"
           style={{
-            width: 'auto',
+            width: '100px',
             height: '100%'
           }}
         />
 
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col justify-between">
           <p className="text-lg">{product.title}</p>
 
-          <p className="font-bold">$ {product.price.toFixed(2)}</p>
+          <p
+            className={clsx(
+              { "font-bold": !disabledUi }
+            )}
+          >${product.price.toFixed(2)}{disabledUi && ` x ${quantity}`}</p>
 
-          <QuantitySelector quantity={2} />
+          {disabledUi && (
+            <p className="font-bold">Subtotal:
+              <span className="font-normal"> ${(quantity * product.price).toFixed(2)}</span>
+            </p>
+          )}
+
+          {!disabledUi && <QuantitySelector quantity={2} />}
         </div>
       </div>
 
-      <button className="">
+      {!disabledUi && <button className="">
         <IoTrashOutline size={35} color="#ad0000" />
-      </button>
+      </button>}
     </div>
   )
 }
