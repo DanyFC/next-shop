@@ -33,7 +33,7 @@ const GridItem = ({ product }: Props) => {
           href={`/products/${product.slug}`}
         >{product.title}</Link>
 
-        <span className="font-bold">$ {product.price.toFixed(2)}</span>
+        <span className="font-bold">${product.price.toFixed(2)}</span>
 
       </div>
     </div>
