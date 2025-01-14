@@ -14,7 +14,7 @@ const BannerForm = () => {
 
   return (
     <div className={clsx(
-      "absolute top-0 right-0 w-1/2 h-full overflow-hidden transition-all duration-500 z-50",
+      "hidden sm:block absolute top-0 right-0 w-1/2 h-full overflow-hidden transition-all duration-500 z-50",
       { "rounded-tl-[150px] rounded-bl-[100px]": !isLogin },
       { "-translate-x-full rounded-tr-[100px] rounded-br-[150px]": isLogin },
 
