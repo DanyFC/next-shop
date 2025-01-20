@@ -43,7 +43,7 @@ model Product {
   gender       Gender
   inStock      Int
   price        Float          @default(0)
-  size         Size[]
+  sizes         Size[]
   slug         String         @unique
   tags         String[]       @default([])
   title        String
