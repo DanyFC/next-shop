@@ -1,9 +1,23 @@
-import { Grid, Title } from "@/components";
-import { initialData } from "@/seed/seed";
+import { redirect } from "next/navigation";
 
-const products = initialData.products
+import { getPaginatedProductsWithImages } from "@/actions/product/product-pagination";
+import { Grid, Pagination, Title } from "@/components";
 
-export default function ShopPage() {
+interface Props {
+  searchParams: Promise<{
+    page: string;
+  }>
+}
+
+export default async function ShopPage({ searchParams }: Props) {
+  const { page } = await searchParams
+
+  const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({
+    page: page ? parseInt(page) : 1
+  })
+
+  if (products.length === 0) redirect('/')
+
   return (
     <div>
       <Title
@@ -11,7 +25,10 @@ export default function ShopPage() {
         subtitle="All the products"
         title="Shop"
       />
+
       <Grid products={products} />
+
+      <Pagination totalPages={totalPages} />
     </div>
   );
 }
