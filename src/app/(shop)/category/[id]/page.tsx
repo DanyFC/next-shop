@@ -1,19 +1,25 @@
-import { Grid, Title } from "@/components";
-import { initialData } from "@/seed/seed";
+import { getPaginatedProductsWithImages } from "@/actions/product/product-pagination";
+import { Grid, Pagination, Title } from "@/components";
+import { Category } from "@/interfaces";
 
 interface Props {
   params: Promise<{
-    id: string
+    id: string;
+  }>;
+  searchParams: Promise<{
+    page?: string;
   }>
 }
 
-const products = initialData.products
-
-export default async function CategoryPage({ params }: Props) {
+export default async function CategoryPage({ params, searchParams }: Props) {
   const { id } = await params
+  const { page } = await searchParams
 
-  const productsByCat = products.filter(product => (product.gender === id))
-
+  const { products, totalPages } = await getPaginatedProductsWithImages({
+    page: page ? parseInt(page) : 1,
+    gender: id as Category,
+  })
+  
   // if (id === 'kids') notFound()
 
   return (
@@ -23,7 +29,10 @@ export default async function CategoryPage({ params }: Props) {
         subtitle={`All the products for ${id}s`}
         title={`${id.charAt(0).toUpperCase()}${id.slice(1)}s`}
       />
-      <Grid products={productsByCat} />
+
+      <Grid products={products} />
+
+      <Pagination totalPages={totalPages} />
     </div>
   );
 }
