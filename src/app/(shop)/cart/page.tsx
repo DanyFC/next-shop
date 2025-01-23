@@ -5,9 +5,9 @@ import { CartItem, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 
 const productsInCart = [
-  // initialData.products[5],
-  // initialData.products[6],
-  // initialData.products[7],
+  {...initialData.products[5], id: '123'},
+  {...initialData.products[6], id: '123'},
+  {...initialData.products[7], id: '123'},
 ]
 
 export default function CartPage() {

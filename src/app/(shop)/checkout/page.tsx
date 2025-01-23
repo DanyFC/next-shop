@@ -4,9 +4,9 @@ import { CartItem, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 
 const productsInCart = [
-  initialData.products[2],
-  initialData.products[4],
-  initialData.products[5],
+  {...initialData.products[2], id: '123'},
+  {...initialData.products[4], id: '123'},
+  {...initialData.products[5], id: '123'},
 ]
 
 export default function CheckoutPage() {
