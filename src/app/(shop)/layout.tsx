@@ -3,7 +3,10 @@ import { Metadata } from "next";
 import { Footer, Sidebar, TopMenu } from "@/components";
 
 export const metadata: Metadata = {
-  title: 'Next-Shop',
+  title: {
+    template: '%s - Next | Shop',
+    default: 'Next | Shop'
+  },
   description: 'Shop main page',
 };
 
