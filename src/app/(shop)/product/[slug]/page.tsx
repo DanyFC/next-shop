@@ -1,17 +1,36 @@
+export const revalidate = 604800 // 7 days
+
 import { notFound } from "next/navigation";
 
-import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from "@/components";
+import { getProductBySlug } from "@/actions/product/product-by-slug";
+import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile, StockLabel } from "@/components";
 import { montserrat } from "@/config/fonts";
-import { initialData } from "@/seed/seed";
 
 interface Props {
   params: Promise<{
     slug: string;
   }>
 }
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
+
+  const product = await getProductBySlug(slug)
+
+  return {
+    title: product?.title ?? 'Not found product',
+    description: product?.description ?? 'Not found product',
+    openGraph: {
+      title: product?.title ?? 'Not found product',
+      description: product?.description ?? 'Not found product',
+      images: [`/products/${product?.images[1]}`]
+    }
+  }
+}
+
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params
-  const product = initialData.products.find(product => product.slug === slug)
+  const product = await getProductBySlug(slug)
 
   if (!product) notFound()
 
@@ -20,13 +39,15 @@ export default async function ProductPage({ params }: Props) {
       <div className="col-span-1 sm:col-span-2">
         <SlideShowMobile images={product.images} title={product.title} className="block sm:hidden" />
 
-        <SlideShow images={product.images} title={product.title} className="hidden sm:block"/>
+        <SlideShow images={product.images} title={product.title} className="hidden sm:block" />
       </div>
 
       <div className="col-span-1 px-5 ">
         <h1 className={`${montserrat.className} antialiased font-bold text-xl`}>{product.title}</h1>
 
-        <p className="text-lg mb-5">${product.price.toFixed(2)}</p>
+        <p className="text-lg mb-4">${product.price.toFixed(2)}</p>
+
+        <StockLabel slug={slug} />
 
         <SizeSelector selectedSize={product.sizes[0]} availableSizes={product.sizes} />
 
