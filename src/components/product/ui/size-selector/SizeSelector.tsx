@@ -14,7 +14,7 @@ interface Props {
 const SizeSelector = ({ availableSizes, selectedSize, onSizeChange }: Props) => {
 
   return (
-    <div className="my-5">
+    <div>
       <h3 className="font-bold mb-2">Size</h3>
 
       <div className="flex">
