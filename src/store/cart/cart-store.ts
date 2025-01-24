@@ -7,6 +7,7 @@ import { persist } from "zustand/middleware";
 interface State {
   cart: CartProduct[];
 
+  getTotalItems: () => number;
   addProductToCart: (product: CartProduct) => void;
   // updateProductToCart: ()=>void;
   // deleteProductToCart: ()=>void;
@@ -17,6 +18,11 @@ export const useCartStore = create<State>()(
     (set, get) => ({
       cart: [],
 
+      getTotalItems: () => {
+        const { cart } = get()
+
+        return cart.reduce((acc, current) => acc + current.quantity, 0)
+      },
       addProductToCart: (product) => {
         const { cart } = get()
 
