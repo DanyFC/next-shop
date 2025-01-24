@@ -1,17 +1,17 @@
 "use client";
 
 import clsx from "clsx";
-import { useState } from "react";
 
 import { Size } from "@/interfaces";
 
 interface Props {
   availableSizes: Size[];
   selectedSize: Size;
+
+  onSizeChange: (size: string) => void;
 }
 
-const SizeSelector = ({ availableSizes, selectedSize }: Props) => {
-  const [currentSize, setCurrentSize] = useState(selectedSize)
+const SizeSelector = ({ availableSizes, selectedSize, onSizeChange }: Props) => {
 
   return (
     <div className="my-5">
@@ -24,9 +24,9 @@ const SizeSelector = ({ availableSizes, selectedSize }: Props) => {
               key={size}
               className={clsx(
                 "mx-2 hover:underline text-xl",
-                { "underline": size === currentSize }
+                { "underline": size === selectedSize }
               )}
-              onClick={() => setCurrentSize(size)}
+              onClick={() => onSizeChange(size)}
             >
               {size}
             </button>

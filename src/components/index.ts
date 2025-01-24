@@ -1,8 +1,10 @@
 export { default as CartItem } from './cart/shopping-cart/CartItem';
-export { default as QuantitySelector } from './product/quantity-selector/QuantitySelector';
-export { default as SizeSelector } from './product/size-selector/SizeSelector';
 export { default as SlideShow } from './product/slide-show/SlideShow';
 export { default as SlideShowMobile } from './product/slide-show/SlideShowMobile';
+export { default as StockLabel } from './product/stock-label/StockLabel';
+export { default as PurchaseDetail } from './product/ui/PurchaseDetail';
+export { default as QuantitySelector } from './product/ui/quantity-selector/QuantitySelector';
+export { default as SizeSelector } from './product/ui/size-selector/SizeSelector';
 export { default as Grid } from './products/product-grid/Grid';
 export { default as GridItem } from './products/product-grid/GridItem';
 export { default as BannerForm } from './ui/auth/BannerForm';
@@ -14,4 +16,4 @@ export { default as Pagination } from './ui/pagination/Pagination';
 export { default as Sidebar } from './ui/sidebar/Sidebar';
 export { default as Title } from './ui/title/Title';
 export { default as TopMenu } from './ui/top-menu/TopMenu';
-export { default as StockLabel } from './product/stock-label/StockLabel';
+

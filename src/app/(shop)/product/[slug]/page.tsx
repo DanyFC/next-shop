@@ -3,7 +3,7 @@ export const revalidate = 604800 // 7 days
 import { notFound } from "next/navigation";
 
 import { getProductBySlug } from "@/actions/product/product-by-slug";
-import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile, StockLabel } from "@/components";
+import { PurchaseDetail, SlideShow, SlideShowMobile, StockLabel } from "@/components";
 import { montserrat } from "@/config/fonts";
 
 interface Props {
@@ -49,9 +49,7 @@ export default async function ProductPage({ params }: Props) {
 
         <StockLabel slug={slug} />
 
-        <SizeSelector selectedSize={product.sizes[0]} availableSizes={product.sizes} />
-
-        <QuantitySelector />
+        <PurchaseDetail product={product} />
 
         <button className="btn-primary my-5">Add to cart</button>
 
