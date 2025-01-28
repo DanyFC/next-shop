@@ -1,4 +1,5 @@
 export { default as CartItem } from './cart/shopping-cart/CartItem';
+export { default as ProductsInCart } from './cart/shopping-cart/ProductsInCart';
 export { default as SlideShow } from './product/slide-show/SlideShow';
 export { default as SlideShowMobile } from './product/slide-show/SlideShowMobile';
 export { default as StockLabel } from './product/stock-label/StockLabel';
