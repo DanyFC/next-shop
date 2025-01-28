@@ -3,11 +3,18 @@ import { create } from "zustand";
 import { CartProduct } from "@/interfaces";
 import { persist } from "zustand/middleware";
 
+interface SummaryCart {
+  totalProducts: number;
+  subTotalCost: number;
+  totalCost: number;
+}
 
 interface State {
   cart: CartProduct[];
 
   getTotalItems: () => number;
+  getSummaryCart: () => SummaryCart;
+
   addProductToCart: (product: CartProduct) => void;
   updateProductQuantity: (product: CartProduct, quantity: number) => void;
   deleteProductToCart: (product: CartProduct,) => void;
@@ -22,6 +29,16 @@ export const useCartStore = create<State>()(
         const { cart } = get()
 
         return cart.reduce((acc, current) => acc + current.quantity, 0)
+      },
+
+      getSummaryCart: () => {
+        const { cart } = get()
+
+        const totalProducts = cart.reduce((acc, current) => acc + current.quantity, 0)
+        const subTotalCost = cart.reduce((acc, current) => acc + (current.price * current.quantity), 0)
+        const totalCost = subTotalCost + (0.15 * subTotalCost)
+
+        return { totalProducts, subTotalCost, totalCost }
       },
 
       addProductToCart: (product) => {
@@ -57,7 +74,7 @@ export const useCartStore = create<State>()(
 
         set({ cart: updatedCartProducts })
       },
-      
+
       deleteProductToCart: (product) => {
         const { cart } = get()
         const updatedCartProducts = cart.filter(
