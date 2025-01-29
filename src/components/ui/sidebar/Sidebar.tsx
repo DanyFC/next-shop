@@ -1,6 +1,7 @@
 "use client";
 
 import clsx from "clsx";
+import { signOut } from "next-auth/react";
 import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPersonAddOutline, IoPersonOutline, IoSearchOutline, IoTicketOutline, IoTicketSharp } from "react-icons/io5";
 
 import { useUIStore } from "@/store";
@@ -10,22 +11,17 @@ const sidebarItems = [
   {
     title: 'Profile',
     icon: <IoPersonOutline size={30} />,
-    path: '/'
+    path: '/profile'
   },
   {
     title: 'Orders',
     icon: <IoTicketOutline size={30} />,
-    path: '/'
+    path: '/orders'
   },
   {
     title: 'Log in',
     icon: <IoLogInOutline size={30} />,
-    path: '/'
-  },
-  {
-    title: 'Log out',
-    icon: <IoLogOutOutline size={30} />,
-    path: '/'
+    path: '/auth'
   }
 ]
 
@@ -33,7 +29,7 @@ const sidebarAdminItems = [
   {
     title: 'Products',
     icon: <IoPersonOutline size={30} />,
-    path: '/'
+    path: '/products'
   },
   {
     title: 'Orders',
@@ -52,6 +48,10 @@ const Sidebar = () => {
   const isSidebarOpen = useUIStore(state => state.isSidebarOpen)
   const closeSidebar = useUIStore(state => state.closeSidebar)
 
+  const onLogout = async () => {
+    closeSidebar()
+    await signOut()
+  }
   return (
     <div className="">
       {
@@ -97,6 +97,16 @@ const Sidebar = () => {
         {
           sidebarAdminItems.map((item) => (<SidebarItem key={item.title} {...item} />))
         }
+
+        <div className="w-full h-px bg-gray-200 my-10" />
+
+        <button
+          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+          onClick={() => onLogout()}
+        >
+          <IoLogOutOutline size={30} />
+          <span className="ml-3 text-xl">Log out</span>
+        </button>
       </nav>
 
     </div>

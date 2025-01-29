@@ -1,3 +1,4 @@
+import { useUIStore } from "@/store";
 import Link from "next/link";
 import { ReactNode } from "react";
 
@@ -9,10 +10,13 @@ interface Props {
 }
 
 const SidebarItem = ({ className = '', icon, path, title }: Props) => {
+  const closeSidebar = useUIStore((state)=>state.closeSidebar)
+
   return (
     <Link
       className={`${className} flex items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all`}
       href={path}
+      onClick={()=>closeSidebar()}
     >
       {icon}
       <span className="ml-3 text-xl">{title}</span>
