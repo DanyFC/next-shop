@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -29,7 +29,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { email }
         })
 
-        if (!user || !bcrypt.compareSync(password, user.password)) return null
+        if (!user || !bcryptjs.compareSync(password, user.password)) return null
 
         const { password: _, ...rest } = user
         return rest
