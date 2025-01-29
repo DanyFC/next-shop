@@ -1,11 +1,22 @@
-import Link from "next/link";
-import { IoLogoFacebook, IoLogoGithub, IoLogoGoogle, IoLogoLinkedin } from "react-icons/io5";
+"use client";
 
+import clsx from 'clsx';
+import Link from "next/link";
+import { useActionState } from "react";
+import { IoInformationOutline, IoLogoFacebook, IoLogoGithub, IoLogoGoogle, IoLogoLinkedin } from "react-icons/io5";
+
+import { login } from "@/actions/auth/login";
 import { montserrat } from "@/config/fonts";
 
+
 const LoginForm = () => {
+  const [errorMessage, dispatch, isPending] = useActionState(login, undefined)
+
   return (
-    <form className="bg-white flex items-center justify-center flex-col px-10 h-full">
+    <form
+      className="bg-white flex items-center justify-center flex-col px-10 h-full"
+      action={dispatch}
+    >
       <h1 className={`text-xl font-bold ${montserrat.className}`}>Log In</h1>
 
       <div className="my-2 flex gap-8">
@@ -29,10 +40,28 @@ const LoginForm = () => {
 
       <span className={`text-sm text-gray-500 ${montserrat.className}`}>or use your email password</span>
 
-      <input className="bg-[#eee] border-none my-2 py-3 px-4 text-sm rounded-lg w-full outline-none" type="email" placeholder="Email" />
-      <input className="bg-[#eee] border-none my-2 py-3 px-4 text-sm rounded-lg w-full outline-none" type="password" placeholder="Password" />
+      <input className="bg-[#eee] border-none my-2 py-3 px-4 text-sm rounded-lg w-full outline-none" name="email" type="email" placeholder="Email" />
+      <input className="bg-[#eee] border-none my-2 py-3 px-4 text-sm rounded-lg w-full outline-none" name="password" type="password" placeholder="Password" />
 
-      <button className="bg-[#2da0a8] text-white text-sm py-3 px-11 border border-solid border-transparent rounded-lg font-bold tracking-normal uppercase mt-2 cursor-pointer">Log In</button>
+      <button
+        className={clsx(
+          "bg-[#2da0a8] text-white text-sm py-3 px-11 border border-solid border-transparent rounded-lg font-bold tracking-normal uppercase mt-2 cursor-pointer",
+          { "bg-gray-400": isPending }
+        )}
+        disabled={isPending}
+      >Log In</button>
+      <div
+        className="flex h-8 items-end space-x-1"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {errorMessage && (
+          <div className="flex flex-row justify-center items-center">
+            <IoInformationOutline size={25} className="text-red-500" />
+            <p className="text-lg text-red-500">{errorMessage}</p>
+          </div>
+        )}
+      </div>
     </form>
   )
 }
