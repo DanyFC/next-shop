@@ -9,6 +9,7 @@ export { default as QuantitySelector } from './product/ui/quantity-selector/Quan
 export { default as SizeSelector } from './product/ui/size-selector/SizeSelector';
 export { default as Grid } from './products/product-grid/Grid';
 export { default as GridItem } from './products/product-grid/GridItem';
+export { default as Provider } from './providers/Provider';
 export { default as BannerForm } from './ui/auth/BannerForm';
 export { default as LoginForm } from './ui/auth/LoginForm';
 export { default as RegisterForm } from './ui/auth/RegisterForm';
@@ -18,4 +19,3 @@ export { default as Pagination } from './ui/pagination/Pagination';
 export { default as Sidebar } from './ui/sidebar/Sidebar';
 export { default as Title } from './ui/title/Title';
 export { default as TopMenu } from './ui/top-menu/TopMenu';
-

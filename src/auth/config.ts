@@ -10,6 +10,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: '/auth',
     newUser: '/auth'
   },
+
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.data = user
+      }
+
+      return token
+    },
+
+    session({ session, token, user }) {
+      session.user = token.data as any
+
+      return session
+    },
+  },
+
   providers: [
     CredentialsProvider({
       id: 'local-credentials',
@@ -18,7 +35,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: 'Email', type: 'email', placeholder: 'example@domain.com' },
         password: { label: 'Password', type: 'password', placeholder: '●●●●●●●●' }
       },
-      
+
       async authorize(credentials) {
         const parsedCredentials = signInSchema.safeParse(credentials)
 

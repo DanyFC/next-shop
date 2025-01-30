@@ -1,7 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import { IoCloseOutline, IoLogInOutline, IoLogOutOutline, IoPersonAddOutline, IoPersonOutline, IoSearchOutline, IoTicketOutline, IoTicketSharp } from "react-icons/io5";
 
 import { useUIStore } from "@/store";
@@ -17,11 +18,6 @@ const sidebarItems = [
     title: 'Orders',
     icon: <IoTicketOutline size={30} />,
     path: '/orders'
-  },
-  {
-    title: 'Log in',
-    icon: <IoLogInOutline size={30} />,
-    path: '/auth'
   }
 ]
 
@@ -48,10 +44,21 @@ const Sidebar = () => {
   const isSidebarOpen = useUIStore(state => state.isSidebarOpen)
   const closeSidebar = useUIStore(state => state.closeSidebar)
 
+  const [isLoading, setIsLoading] = useState(true)
+
+  const { data: session } = useSession()
+  const isAuthenticated = !!session?.user
+  const isAdmin = (session?.user.role === 'admin')
+
   const onLogout = async () => {
     closeSidebar()
     await signOut()
   }
+
+  useEffect(() => {
+    setIsLoading(false)
+  }, [])
+
   return (
     <div className="">
       {
@@ -88,25 +95,42 @@ const Sidebar = () => {
           />
         </div>
 
-        {
-          sidebarItems.map((item) => (<SidebarItem key={item.title} {...item} />))
+        {!isLoading && !isAuthenticated && (<SidebarItem
+          icon={<IoLogInOutline size={30} />}
+          path="/auth"
+          title="Login"
+        />)}
+
+        {!isLoading && isAuthenticated && (sidebarItems.map((item) => (
+          <SidebarItem key={item.title} {...item} />
+        )))
         }
 
-        <div className="w-full h-px bg-gray-200 my-10" />
+
+        {!isLoading && isAuthenticated && isAdmin && (
+          <>
+            <div className="w-full h-px bg-gray-200 my-10" />
+
+            {sidebarAdminItems.map((item) => (
+              <SidebarItem key={item.title} {...item} />
+            ))}
+          </>
+        )}
 
         {
-          sidebarAdminItems.map((item) => (<SidebarItem key={item.title} {...item} />))
+          !isLoading && isAuthenticated && (
+            <>
+              <div className="w-full h-px bg-gray-200 my-10" />
+
+              <button className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
+                onClick={() => onLogout()}
+              >
+                <IoLogOutOutline size={30} />
+                <span className="ml-3 text-xl">Log out</span>
+              </button>
+            </>
+          )
         }
-
-        <div className="w-full h-px bg-gray-200 my-10" />
-
-        <button
-          className="flex w-full items-center mt-10 p-2 hover:bg-gray-100 rounded transition-all"
-          onClick={() => onLogout()}
-        >
-          <IoLogOutOutline size={30} />
-          <span className="ml-3 text-xl">Log out</span>
-        </button>
       </nav>
 
     </div>

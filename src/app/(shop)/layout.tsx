@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import { Footer, Sidebar, TopMenu } from "@/components";
+import { Footer, Provider, Sidebar, TopMenu } from "@/components";
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +19,9 @@ export default function ShopLayout({
     <div className="min-h-screen">
       <TopMenu />
 
-      <Sidebar />
+      <Provider>
+        <Sidebar />
+      </Provider>
 
       <div className="px-0 sm:px-10">
         {children}
