@@ -18,11 +18,29 @@ export const login = async (
     if (error instanceof AuthError) {
       switch (error.type) {
         case 'CredentialsSignin':
-          return 'Invalid credentials.';
+          return 'Invalid credentials.'
         default:
-          return 'Something went wrong.';
+          return 'Something went wrong.'
       }
     }
-    throw error;
+    throw error
+  }
+}
+
+export const authenticate = async (email: string, password: string) => {
+  try {
+    await signIn("local-credentials", {email, password, redirect: false})
+    
+    return 'success'
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.'
+        default:
+          return 'Something went wrong.'
+      }
+    }
+    throw error
   }
 }
