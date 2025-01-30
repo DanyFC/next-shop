@@ -2,7 +2,8 @@
 
 import clsx from 'clsx';
 import Link from "next/link";
-import { useActionState } from "react";
+import { useRouter } from 'next/navigation';
+import { useActionState, useEffect } from "react";
 import { IoInformationOutline, IoLogoFacebook, IoLogoGithub, IoLogoGoogle, IoLogoLinkedin } from "react-icons/io5";
 
 import { login } from "@/actions/auth/login";
@@ -11,6 +12,13 @@ import { montserrat } from "@/config/fonts";
 
 const LoginForm = () => {
   const [errorMessage, dispatch, isPending] = useActionState(login, undefined)
+
+  const router = useRouter()
+
+  useEffect(() => {
+    if (errorMessage === 'success')
+      router.replace('/')
+  }, [errorMessage])
 
   return (
     <form
@@ -55,7 +63,7 @@ const LoginForm = () => {
         aria-live="polite"
         aria-atomic="true"
       >
-        {errorMessage && (
+        {errorMessage && errorMessage !== 'success' && (
           <div className="flex flex-row justify-center items-center">
             <IoInformationOutline size={25} className="text-red-500" />
             <p className="text-lg text-red-500">{errorMessage}</p>

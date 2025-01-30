@@ -8,7 +8,12 @@ export const login = async (
   formData: FormData
 ) => {
   try {
-    await signIn("local-credentials", Object.fromEntries(formData))
+    await signIn("local-credentials", {
+      ...Object.fromEntries(formData),
+      redirect: false
+    })
+
+    return 'success'
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
