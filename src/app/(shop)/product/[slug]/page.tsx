@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
     openGraph: {
       title: product?.title ?? 'Not found product',
       description: product?.description ?? 'Not found product',
-      images: [`/products/${product?.images[1]}`]
+      images: [`/products/${product?.images[0]}`]
     }
   }
 }
