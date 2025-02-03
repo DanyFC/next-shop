@@ -8,6 +8,12 @@ import { deleteAddress } from "@/actions/address/delete-address";
 import { setAddress as setAddressDB } from '@/actions/address/set-address';
 import { useAddressStore } from "@/store";
 import { useSession } from "next-auth/react";
+import { Address } from "@/interfaces";
+
+interface Props{
+  countries: {id:string, name:string}[],
+  dbAddress?: Partial<Address> | null
+}
 
 type FormInputs = {
   names: string;
@@ -21,15 +27,14 @@ type FormInputs = {
   remember: boolean;
 }
 
-const AddressForm = ({ countries }: {
-  countries: { id: string, name: string }[]
-}) => {
+const AddressForm = ({countries, dbAddress = {}}:Props) => {
   const setAddress = useAddressStore((state) => state.setAddress)
   const address = useAddressStore((state) => state.address)
 
   const { handleSubmit, register, formState: { isValid }, reset } = useForm<FormInputs>({
     defaultValues: {
-
+      ...dbAddress,
+      remember: true
     }
   })
 
