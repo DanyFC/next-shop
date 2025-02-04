@@ -1,7 +1,8 @@
 "use client";
 
 import clsx from "clsx";
-import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -9,7 +10,6 @@ import { deleteAddress } from "@/actions/address/delete-address";
 import { setAddress as setAddressDB } from '@/actions/address/set-address';
 import { Address } from "@/interfaces";
 import { useAddressStore } from "@/store";
-import { useSession } from "next-auth/react";
 
 interface Props {
   countries: { id: string, name: string }[],
@@ -40,6 +40,7 @@ const AddressForm = ({ countries, dbAddress = {} }: Props) => {
   })
 
   const { data: session } = useSession()
+  const router = useRouter()
 
   const onSubmit = (data: FormInputs) => {
     setAddress(data)
@@ -52,7 +53,7 @@ const AddressForm = ({ countries, dbAddress = {} }: Props) => {
       deleteAddress(session!.user.id)
     }
 
-    redirect('/checkout')
+    router.replace('/checkout')
   }
 
   useEffect(() => {
