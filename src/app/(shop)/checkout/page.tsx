@@ -1,12 +1,10 @@
-"use client";
-
 import Link from "next/link";
 
-import { CartItem, Title } from "@/components";
-import { useCartStore } from "@/store/cart/cart-store";
+import { Title } from "@/components";
+import OrderDetail from "./ui/OrderDetail";
+import ProductsInCart from "./ui/ProductsInCart";
 
 export default function CheckoutPage() {
-  const productsInCart = useCartStore((state) => state.cart);
 
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-10">
@@ -22,61 +20,10 @@ export default function CheckoutPage() {
               className="underline mb-5 text-blue-700"
             >Edit cart</Link>
 
-            {
-              productsInCart.map(product => (
-                <CartItem
-                  key={product.slug + '' + product.size}
-                  product={product}
-                  quantity={product.quantity}
-                  disabledUi />
-              ))
-            }
+            <ProductsInCart />
           </div>
 
-          <div>
-            <div className="bg-white rounded-xl shadow-xl p-7">
-              <h2 className="text-2xl font-bold mb-2">Address direction</h2>
-
-              <div className="mb-10">
-                <p className="text-xl">Username and last name</p>
-                <p>Av. for find 1</p>
-                <p>Av. for find 2</p>
-                <p>+26 999-544-333</p>
-              </div>
-
-              <div className="w-full h-0.5 rounded bg-gray-200 mb-8" />
-
-              <h2 className="text-2xl font-bold mb-2">Resume</h2>
-
-              <div className="grid grid-cols-2">
-                <span>Nro. Products</span>
-                <span className="text-right">3 articles</span>
-
-                <span>SubTotal</span>
-                <span className="text-right">$100.00</span>
-
-                <span>Taxes (15%)</span>
-                <span className="text-right">$100.00</span>
-
-                <span className="text-2xl font-semibold mt-5">Total</span>
-                <span className="text-right font-semibold text-2xl mt-5">$100.00</span>
-              </div>
-
-              <div className="mt-5 mb-2 w-full">
-                <p className="mb-5">
-                  {/* disclaimer */}
-                  <span className="text-xs">
-                    By clicking confirm order, you accept our <a href="#" className="underline text-blue-700">terms and conditions</a> and our <a href="#" className="underline text-blue-700">privacy policy</a>
-                  </span>
-                </p>
-
-                <Link
-                  className="flex btn-primary justify-center"
-                  href="/orders/123"
-                >Confirm order</Link>
-              </div>
-            </div>
-          </div>
+          <OrderDetail />
         </div>
       </div>
     </div>

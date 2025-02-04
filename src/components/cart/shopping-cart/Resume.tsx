@@ -6,7 +6,11 @@ import { useShallow } from "zustand/shallow";
 
 import { useCartStore } from "@/store/cart/cart-store";
 
-const Resume = () => {
+interface Props {
+  disabledBtn?: boolean
+}
+
+const Resume = ({ disabledBtn = false }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
   const { subTotalCost, totalCost, totalProducts } = useCartStore(useShallow((state) => state.getSummaryCart()))
 
@@ -41,7 +45,7 @@ const Resume = () => {
       </div>
 
       {
-        totalProducts !== 0 && (
+        (!disabledBtn && totalProducts !== 0) && (
           <div className="mt-5 mb-2 w-full">
             <Link
               className="flex btn-primary justify-center"
