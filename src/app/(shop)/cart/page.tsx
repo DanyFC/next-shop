@@ -21,8 +21,10 @@ export default function CartPage() {
             <ProductsInCart />
           </div>
 
-          <div className="bg-white rounded-xl shadow-xl p-7">
-            <Resume />
+          <div>
+            <div className="bg-white rounded-xl shadow-xl p-7">
+              <Resume />
+            </div>
           </div>
         </div>
       </div>

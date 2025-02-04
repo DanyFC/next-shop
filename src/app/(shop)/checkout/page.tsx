@@ -1,15 +1,13 @@
+"use client";
+
 import Link from "next/link";
 
 import { CartItem, Title } from "@/components";
-import { initialData } from "@/seed/seed";
-
-const productsInCart = [
-  {...initialData.products[2], id: '123'},
-  {...initialData.products[4], id: '123'},
-  {...initialData.products[5], id: '123'},
-]
+import { useCartStore } from "@/store/cart/cart-store";
 
 export default function CheckoutPage() {
+  const productsInCart = useCartStore((state) => state.cart);
+
   return (
     <div className="flex justify-center items-center mb-72 px-10 sm:px-10">
       <div className="flex flex-col w-[1000px]">
@@ -21,11 +19,17 @@ export default function CheckoutPage() {
 
             <Link
               href="/cart"
-              className="underline mb-5"
+              className="underline mb-5 text-blue-700"
             >Edit cart</Link>
 
             {
-              productsInCart.map(product => (<CartItem key={product.slug} product={product} quantity={3} disabledUi />))
+              productsInCart.map(product => (
+                <CartItem
+                  key={product.slug + '' + product.size}
+                  product={product}
+                  quantity={product.quantity}
+                  disabledUi />
+              ))
             }
           </div>
 

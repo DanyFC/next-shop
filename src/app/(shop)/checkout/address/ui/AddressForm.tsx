@@ -1,17 +1,18 @@
 "use client";
 
 import clsx from "clsx";
+import { redirect } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { deleteAddress } from "@/actions/address/delete-address";
 import { setAddress as setAddressDB } from '@/actions/address/set-address';
+import { Address } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import { useSession } from "next-auth/react";
-import { Address } from "@/interfaces";
 
-interface Props{
-  countries: {id:string, name:string}[],
+interface Props {
+  countries: { id: string, name: string }[],
   dbAddress?: Partial<Address> | null
 }
 
@@ -27,7 +28,7 @@ type FormInputs = {
   remember: boolean;
 }
 
-const AddressForm = ({countries, dbAddress = {}}:Props) => {
+const AddressForm = ({ countries, dbAddress = {} }: Props) => {
   const setAddress = useAddressStore((state) => state.setAddress)
   const address = useAddressStore((state) => state.address)
 
@@ -50,6 +51,8 @@ const AddressForm = ({countries, dbAddress = {}}:Props) => {
     } else {
       deleteAddress(session!.user.id)
     }
+
+    redirect('/checkout')
   }
 
   useEffect(() => {
@@ -178,9 +181,9 @@ const AddressForm = ({countries, dbAddress = {}}:Props) => {
           className={clsx(
             "flex w-full sm:w-1/2 justify-center",
             { "btn-primary": isValid },
-            { "btn-secondary": !isValid }
+            { "btn-secondary": !isValid || !session?.user }
           )}
-          disabled={!isValid}
+          disabled={!isValid || !session?.user}
         >
           Next
         </button>
