@@ -5,7 +5,17 @@ import { prisma } from "@/lib/prisma";
 export const getAddress = async (userId: string) => {
   try {
     const address = await prisma.address.findUnique({
-      where: { userId }
+      where: { userId },
+      select: {
+        lastNames: true,
+        address: true,
+        addressOptional: true,
+        city: true,
+        countryId: true,
+        names: true,
+        phone: true,
+        postalCode: true,
+      }
     })
 
     if (!address) return null

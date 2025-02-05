@@ -116,9 +116,9 @@ model Order {
   total           Float
   productsInOrder Int
   isPaid          Boolean
-  paidAt          DateTime
+  paidAt          DateTime?
   isSend          Boolean  @default(false)
-  sendAt          DateTime @default(now())
+  sendAt          DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
