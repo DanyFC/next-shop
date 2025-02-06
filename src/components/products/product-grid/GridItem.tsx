@@ -30,7 +30,7 @@ const GridItem = ({ product }: Props) => {
       <div className="p-4 flex flex-col">
         <Link
           className="hover:text-blue-700"
-          href={`/products/${product.slug}`}
+          href={`/product/${product.slug}`}
         >{product.title}</Link>
 
         <span className="font-bold">${product.price.toFixed(2)}</span>
