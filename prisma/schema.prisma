@@ -110,14 +110,14 @@ model Address {
 }
 
 model Order {
-  id              String   @id @default(uuid())
+  id              String    @id @default(uuid())
   subTotal        Float
   tax             Float
   total           Float
   productsInOrder Int
   isPaid          Boolean
   paidAt          DateTime?
-  isSend          Boolean  @default(false)
+  isSend          Boolean   @default(false)
   sendAt          DateTime?
 
   createdAt DateTime @default(now())
@@ -128,6 +128,8 @@ model Order {
 
   ProductOrder ProductOrder[]
   AddressOrder AddressOrder?
+
+  transactionId String?
 }
 
 model ProductOrder {
