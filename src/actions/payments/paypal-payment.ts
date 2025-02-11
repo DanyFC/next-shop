@@ -1,9 +1,9 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 
 import { prisma } from "@/lib/prisma";
 import { getPaypalBearerToken, verifyPaypalOrderDetail } from "@/utils/paypal";
-import { revalidatePath } from "next/cache";
 
 export const paypalCheckPayment = async (transactionId: string) => {
   try {
@@ -33,8 +33,6 @@ export const paypalCheckPayment = async (transactionId: string) => {
       message: 'Payment is successful',
     }
   } catch (error: any) {
-    console.log("🔥 🔜 paypal-payment.ts 🔜 paypalCheckPayment 🔜 error:", error?.message)
-
     return {
       ok: false,
       message: error.message,

@@ -12,7 +12,6 @@ export const setAddress = async (address: Address, userId: string) => {
       address: newAddress
     }
   } catch (error) {
-    console.log("🔵 💢 setAddress 💢 error:", error)
     return {
       ok: false,
       error: 'Ops Something goes wrong!!!'
@@ -55,7 +54,6 @@ const createOrReplace = async (address: Address, userId: string) => {
 
     return updatedAddress
   } catch (error) {
-    console.log("🔵 💢 createOrReplace 💢 error:", error)
     throw new Error('Address cant be saved!')
   }
 }

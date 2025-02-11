@@ -30,7 +30,6 @@ export const getPaypalBearerToken = async (): Promise<string | null> => {
     const data = await response.json()
     return data.access_token
   } catch (error) {
-    console.log("🔥 🔜 paypal-payment.ts 🔜 getPaypalBearerToken 🔜 error:", error)
     return null
   }
 }
@@ -54,7 +53,6 @@ export const verifyPaypalOrderDetail = async (transactionId: string, token: stri
 
     return data
   } catch (error) {
-    console.log("🔥 🔜 paypal-payment.ts 🔜 paypalCheckPayment 🔜 error:", error)
     return null
   }
 }

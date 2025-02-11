@@ -1,9 +1,9 @@
 import clsx from "clsx";
+import { redirect } from "next/navigation";
 import { IoCardOutline } from "react-icons/io5";
 
 import { getOrderById } from "@/actions/order/get-order";
 import { CartItem, PaypalButton, Title } from "@/components";
-import { redirect } from "next/navigation";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -33,7 +33,7 @@ export default async function OrderPage({ params }: Props) {
             </div>
 
             {products && (
-              products.map(product => (<CartItem key={product.slug + '-' + product.size} product={product} quantity={3} disabledUi />))
+              products.map(product => (<CartItem key={product.slug + '-' + product.size} product={product} quantity={product.quantity} disabledUi />))
             )}
           </div>
 

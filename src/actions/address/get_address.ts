@@ -29,7 +29,6 @@ export const getAddress = async (userId: string) => {
       addressOptional: addressOptional || ''
     }
   } catch (error) {
-    console.log("🔵 💢 getAddress 💢 error:", error)
     return {}
   }
 }

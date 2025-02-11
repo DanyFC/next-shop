@@ -8,7 +8,6 @@ export const deleteAddress = async (userId: string) => {
       where: { userId }
     })
   } catch (error) {
-    console.log("🔵 💢 deleteAddress 💢 error:", error)
     return {
       ok: false,
       message: 'Error deleting address'
