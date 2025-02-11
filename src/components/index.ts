@@ -1,6 +1,7 @@
 export { default as CartItem } from './cart/shopping-cart/CartItem';
 export { default as ProductsInCart } from './cart/shopping-cart/ProductsInCart';
 export { default as Resume } from './cart/shopping-cart/Resume';
+export { default as PaypalButton } from './paypal/PaypalButton';
 export { default as SlideShow } from './product/slide-show/SlideShow';
 export { default as SlideShowMobile } from './product/slide-show/SlideShowMobile';
 export { default as StockLabel } from './product/stock-label/StockLabel';
@@ -19,3 +20,4 @@ export { default as Pagination } from './ui/pagination/Pagination';
 export { default as Sidebar } from './ui/sidebar/Sidebar';
 export { default as Title } from './ui/title/Title';
 export { default as TopMenu } from './ui/top-menu/TopMenu';
+

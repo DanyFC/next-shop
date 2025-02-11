@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { IoCardOutline } from "react-icons/io5";
 
 import { getOrderById } from "@/actions/order/get-order";
-import { CartItem, Title } from "@/components";
+import { CartItem, PaypalButton, Title } from "@/components";
 import { redirect } from "next/navigation";
 
 interface Props {
@@ -67,6 +67,13 @@ export default async function OrderPage({ params }: Props) {
                 <span className="text-2xl font-semibold mt-5">Total</span>
                 <span className="text-right font-semibold text-2xl mt-5">${order?.total.toFixed(2)}</span>
               </div>
+              {
+                !order?.isPaid && (
+                  <div className="mt-4">
+                    <PaypalButton amount={order!.total} orderId={order!.id} />
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
