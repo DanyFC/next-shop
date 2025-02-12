@@ -51,6 +51,7 @@ const Sidebar = () => {
   const isAdmin = (session?.user.role === 'admin')
 
   const onLogout = async () => {
+    localStorage.clear()
     closeSidebar()
     await signOut()
   }
