@@ -65,13 +65,15 @@ const PaypalButton = ({ amount, orderId }: Props) => {
   }
 
   return (
-    <PayPalScriptProvider options={{
-      clientId: process.env.NEXT_PUBLIC_PAYPAL ?? '',
-      intent: 'capture',
-      currency: 'USD',
-    }}>
-      <ButtonWrapper />
-    </PayPalScriptProvider>
+    <div className='relative z-0'>
+      <PayPalScriptProvider options={{
+        clientId: process.env.NEXT_PUBLIC_PAYPAL ?? '',
+        intent: 'capture',
+        currency: 'USD',
+      }}>
+        <ButtonWrapper />
+      </PayPalScriptProvider>
+    </div>
   )
 }
 export default PaypalButton

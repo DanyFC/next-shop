@@ -25,17 +25,17 @@ const sidebarAdminItems = [
   {
     title: 'Products',
     icon: <IoPersonOutline size={30} />,
-    path: '/products'
+    path: '/maintenance/products'
   },
   {
-    title: 'Orders',
+    title: 'All orders',
     icon: <IoTicketSharp size={30} />,
-    path: '/'
+    path: '/maintenance/orders'
   },
   {
-    title: 'Users',
+    title: 'All users',
     icon: <IoPersonAddOutline size={30} />,
-    path: '/'
+    path: '/maintenance/users'
   }
 ]
 
