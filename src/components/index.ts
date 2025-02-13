@@ -18,6 +18,7 @@ export { default as Footer } from './ui/footer/Footer';
 export { default as NotFoundPage } from './ui/not-found/NotFoundPage';
 export { default as Pagination } from './ui/pagination/Pagination';
 export { default as Sidebar } from './ui/sidebar/Sidebar';
+export { default as Table } from './ui/table/Table';
 export { default as Title } from './ui/title/Title';
 export { default as TopMenu } from './ui/top-menu/TopMenu';
 

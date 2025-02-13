@@ -1,16 +1,18 @@
+import clsx from 'clsx';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { IoCardOutline } from 'react-icons/io5';
 
 import { getOrdersByUser } from '@/actions/order/get-orders';
 import { auth } from '@/auth/config';
-import { Title } from '@/components';
-import clsx from 'clsx';
-import { redirect } from 'next/navigation';
+import { Table, Title } from '@/components';
+
+const headers = ['#ID', 'Full name', 'Status', 'Options']
 
 export default async function OrdersPage() {
   const session = await auth()
   const { ok, orders, message } = await getOrdersByUser(session!.user.id)
-  
+
   if (!session?.user) redirect('/auth')
 
   if (!ok) return (
@@ -25,65 +27,43 @@ export default async function OrdersPage() {
       <Title title="Orders" />
 
       <div className="mb-10">
-        <table className="min-w-full">
-          <thead className="bg-gray-200 border-b">
-            <tr>
-              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                #ID
-              </th>
+        <Table headers={headers}>
+          {
+            orders!.map((order) => (
+              <tr key={order.id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{order.id.split('-').at(-1)}</td>
 
-              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Full name
-              </th>
+                <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                  {order.AddressOrder?.names + ', ' + order.AddressOrder?.lastNames}
+                </td>
 
-              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Status
-              </th>
+                <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
 
-              <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                Options
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              orders!.map((order) => (
-                <tr key={order.id} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{order.id.split('-').at(-1)}</td>
-
-                  <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    {order.AddressOrder?.names + ', ' + order.AddressOrder?.lastNames}
-                  </td>
-
-                  <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-
-                    <IoCardOutline
-                      className={clsx(
-                        { "text-green-800": order.isPaid },
-                        { "text-red-800": !order.isPaid },
-                      )}
-                    />
-                    <span className={clsx(
-                      'mx-2',
+                  <IoCardOutline
+                    className={clsx(
                       { "text-green-800": order.isPaid },
                       { "text-red-800": !order.isPaid },
                     )}
-                    >
-                      {order.isPaid ? 'Paid' : 'Not Paid'}
-                    </span>
+                  />
+                  <span className={clsx(
+                    'mx-2',
+                    { "text-green-800": order.isPaid },
+                    { "text-red-800": !order.isPaid },
+                  )}
+                  >
+                    {order.isPaid ? 'Paid' : 'Not Paid'}
+                  </span>
+                </td>
 
-                  </td>
-
-                  <td className="text-sm text-gray-900 font-light px-6 ">
-                    <Link href={`/orders/${order.id}`} className="hover:underline">
-                      See order
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
+                <td className="text-sm text-gray-900 font-light px-6 ">
+                  <Link href={`/orders/${order.id}`} className="hover:underline">
+                    See order
+                  </Link>
+                </td>
+              </tr>
+            ))
+          }
+        </Table>
       </div>
     </>
   );
