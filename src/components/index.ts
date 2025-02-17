@@ -21,4 +21,5 @@ export { default as Sidebar } from './ui/sidebar/Sidebar';
 export { default as Table } from './ui/table/Table';
 export { default as Title } from './ui/title/Title';
 export { default as TopMenu } from './ui/top-menu/TopMenu';
+export { default as ProductImage } from './product/product-image/ProductImage';
 

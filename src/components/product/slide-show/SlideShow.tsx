@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { Swiper as SwiperObject } from "swiper";
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import { ProductImage } from '@/components';
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -42,8 +42,8 @@ const SlideShow = ({ className = '', images, title }: Props) => {
         {
           images.map(image => (
             <SwiperSlide key={image}>
-              <Image
-                src={`/products/${image}`}
+              <ProductImage
+                src={image}
                 alt={title}
                 width={1024}
                 height={800}
@@ -67,8 +67,8 @@ const SlideShow = ({ className = '', images, title }: Props) => {
         {
           images.map(image => (
             <SwiperSlide key={image}>
-              <Image
-                src={`/products/${image}`}
+              <ProductImage
+                src={image}
                 alt={title}
                 width={300}
                 height={300}

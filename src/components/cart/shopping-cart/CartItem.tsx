@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { IoTrashOutline } from "react-icons/io5";
 
-import { QuantitySelector } from '@/components';
+import { ProductImage, QuantitySelector } from '@/components';
 import { CartProduct } from "@/interfaces";
 import { useCartStore } from "@/store/cart/cart-store";
 
@@ -23,16 +22,12 @@ const CartItem = ({ disabledUi = false, product, quantity = 0 }: Props) => {
       <div className="flex flex-row justify-start gap-4 w-full">
         <div className='flex w-3/12'>
           <Link href={`/product/${product.slug}`}>
-            <Image
-              src={`/products/${product.image}`}
+            <ProductImage
+              src={product.image}
               alt={product.title}
               width={100}
               height={100}
-              className="mr-5 rounded shadow-sm"
-              style={{
-                width: '100px',
-                height: '100%'
-              }}
+              className="mr-5 rounded shadow-sm w-24 h-full"
             />
           </Link>
         </div>
