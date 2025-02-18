@@ -6,9 +6,11 @@ interface Props {
   height: number;
   src?: string;
   width: number;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
-const ProductImage = ({ alt, height, width, className, src }: Props) => {
+const ProductImage = ({ alt, height, width, className, src, onMouseEnter = () => { }, onMouseLeave = () => { } }: Props) => {
   const localSrc = src
     ? src.startsWith('http')
       ? src
@@ -23,6 +25,9 @@ const ProductImage = ({ alt, height, width, className, src }: Props) => {
         height={height}
         alt={alt}
         className={className}
+
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       />
     </div>
   )

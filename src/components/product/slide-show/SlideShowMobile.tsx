@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -8,6 +7,7 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 
+import ProductImage from "../product-image/ProductImage";
 import "./slideShow.css";
 
 interface Props {
@@ -17,6 +17,17 @@ interface Props {
 }
 
 const SlideShow = ({ className = '', images, title }: Props) => {
+
+  if (images.length === 0) return (
+    <div className={`${className}`}>
+      <ProductImage
+        alt={title}
+        width={600}
+        height={500}
+        className="rounded-lg object-fill"
+      />
+    </div>
+  )
 
   return (
     <div className={`${className}`}>
@@ -33,8 +44,8 @@ const SlideShow = ({ className = '', images, title }: Props) => {
         {
           images.map(image => (
             <SwiperSlide key={image}>
-              <Image
-                src={`/products/${image}`}
+              <ProductImage
+                src={image}
                 alt={title}
                 width={600}
                 height={500}

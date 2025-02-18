@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
+import { ProductImage } from '@/components';
 import { Product } from "@/interfaces";
 
 interface Props {
@@ -15,15 +15,15 @@ const GridItem = ({ product }: Props) => {
   return (
     <div className="rounded-md overflow-hidden fade-in">
       <Link href={`/product/${product.slug}`}>
-        <Image
-          src={`/products/${displayImage}`}
+        <ProductImage
+          src={displayImage}
           alt={product.title}
           className="w-full object-contain rounded-md"
           width={500}
           height={500}
 
-          onMouseEnter={()=>setDisplayImage(product.images[1])}
-          onMouseLeave={()=>setDisplayImage(product.images[0])}
+          onMouseEnter={() => setDisplayImage(product.images[1])}
+          onMouseLeave={() => setDisplayImage(product.images[0])}
         />
       </Link>
 
