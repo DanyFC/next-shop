@@ -24,12 +24,8 @@ export const createUpdateProduct = async (formData: FormData) => {
     const data = Object.fromEntries(formData)
     const productParsed = productSchema.safeParse(data)
 
-    if (!productParsed.success) {
-      console.log("🔥 🔜 create-update-product.ts 🔜 createUpdateProduct 🔜 productParsed:", productParsed.error)
-      
-      throw new Error('Invalid data!')
-    }
-
+    if (!productParsed.success) throw new Error('Invalid data, verify the fields!')
+    
     const product = productParsed.data
     product.slug = product.slug.toLocaleLowerCase().replace(/ /g, '-').trim()
 
@@ -51,7 +47,6 @@ export const createUpdateProduct = async (formData: FormData) => {
           }
         })
 
-        revalidatePath(`/maintenance/products/${rest.slug}`)
         return {
           product: updatedProduct
         }
@@ -69,11 +64,15 @@ export const createUpdateProduct = async (formData: FormData) => {
         }
       })
 
-      revalidatePath('/maintenance/products/new')
       return {
         product: savedProduct
       }
     })
+
+
+    revalidatePath('/maintenance/products')
+    revalidatePath(`/maintenance/products/${prismaTx.product.slug}`)
+    revalidatePath(`/product/${prismaTx.product.slug}`)
 
     return {
       ok: true,

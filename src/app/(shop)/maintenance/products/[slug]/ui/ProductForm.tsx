@@ -2,6 +2,8 @@
 
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { createUpdateProduct } from "@/actions/maintenance/create-update-product";
@@ -35,10 +37,13 @@ interface FormInputs {
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
 export const ProductForm = ({ product, categories }: Props) => {
+
+  const router = useRouter()
+  const [errorMessage, setErrorMessage] = useState('')
+
   const {
     handleSubmit,
     register,
-    formState: { isValid },
     getValues,
     setValue,
     watch,
@@ -60,13 +65,11 @@ export const ProductForm = ({ product, categories }: Props) => {
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData()
-
     const { ...productToSave } = data
 
     if (product.id) {
       formData.append('id', product.id ?? null)
     }
-
     formData.append('title', productToSave.title)
     formData.append('slug', productToSave.slug)
     formData.append('description', productToSave.description)
@@ -77,8 +80,10 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
 
-    const resp = await createUpdateProduct(formData)
-    console.log("🔥 🔜 ProductForm.tsx 🔜 onSubmit 🔜 resp:", resp)
+    const { ok, message, product: savedProduct } = await createUpdateProduct(formData)
+    if (!ok) return setErrorMessage(message)
+
+    router.replace(`/maintenance/products/${savedProduct?.slug}`)
   }
 
   const onSizeChange = (size: string) => {
@@ -93,7 +98,14 @@ export const ProductForm = ({ product, categories }: Props) => {
   }
 
   return (
-    <form className="grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3" onSubmit={handleSubmit(onSubmit)}>
+    <form className=" relative grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3" onSubmit={handleSubmit(onSubmit)}>
+
+      {errorMessage && (
+        <div className="absolute -bottom-14 left-0 bg-red-500 py-2 px-4 rounded">
+          <span className="text-white font-bold text-lg">{errorMessage}</span>
+        </div>
+      )}
+
       <div className="w-full">
         <div className="flex flex-col mb-2">
           <span>Title</span>
