@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { createUpdateProduct } from "@/actions/maintenance/create-update-product";
+import { deleteProductImage } from "@/actions/maintenance/delete-product-image";
 import { ProductImage } from "@/components";
 import { Category, Product } from "@/interfaces";
 import { ProductImage as ProductImageInterface } from "@prisma/client";
@@ -40,12 +41,14 @@ export const ProductForm = ({ product, categories }: Props) => {
 
   const router = useRouter()
   const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const {
     handleSubmit,
     register,
     getValues,
     setValue,
+    formState: { isValid },
     watch,
   } = useForm<FormInputs>({
     defaultValues: {
@@ -66,6 +69,7 @@ export const ProductForm = ({ product, categories }: Props) => {
   watch('sizes')
 
   const onSubmit = async (data: FormInputs) => {
+    setIsLoading(true)
     const formData = new FormData()
     const { images, ...productToSave } = data
 
@@ -90,6 +94,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     const { ok, message, product: savedProduct } = await createUpdateProduct(formData)
     if (!ok) return setErrorMessage(message)
 
+    setIsLoading(false)
     router.replace(`/maintenance/products/${savedProduct?.slug}`)
   }
 
@@ -188,7 +193,14 @@ export const ProductForm = ({ product, categories }: Props) => {
           </select>
         </div>
 
-        <button className="btn-primary w-full">
+        <button
+          className={clsx(
+            "w-full",
+            { "btn-primary": isValid && !isLoading },
+            { "btn-secondary": !isValid || isLoading }
+          )}
+          disabled={!isValid && isLoading}
+        >
           Save
         </button>
       </div>
@@ -250,7 +262,7 @@ export const ProductForm = ({ product, categories }: Props) => {
                   <button
                     type="button"
                     className="absolute bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-2 text-xl rounded shadow-md top-0 right-0"
-                    onClick={() => console.log("🔥 🔜 ProductForm.tsx 🔜 ProductForm 🔜 button:", image)}
+                    onClick={() => deleteProductImage(image.id, image.url)}
                   >&#x2718;</button>
                 </div>
               ))

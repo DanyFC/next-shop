@@ -18,13 +18,28 @@ export const uploadImages = async (images: File[]) => {
     const uploadedImages = await Promise.all(uploadPromises)
 
     return {
-      ok:true,
+      ok: true,
       data: uploadedImages
     }
   } catch (error) {
     return {
       ok: false,
       message: 'Error uploading images!',
+    }
+  }
+}
+
+export const deleteImage = async (imageName: string) => {
+  try {
+    await cloudinary.uploader.destroy(imageName)
+
+    return {
+      ok: true,
+    }
+  } catch (error) {
+    return {
+      ok: false,
+      message: 'Error deleting image!',
     }
   }
 }
