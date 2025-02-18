@@ -10,7 +10,7 @@ interface Props {
   onMouseLeave?: () => void;
 }
 
-const ProductImage = ({ alt, height, width, className, src, onMouseEnter = () => { }, onMouseLeave = () => { } }: Props) => {
+const ProductImage = ({ alt, height, width, className, src, onMouseEnter, onMouseLeave }: Props) => {
   const localSrc = src
     ? src.startsWith('http')
       ? src

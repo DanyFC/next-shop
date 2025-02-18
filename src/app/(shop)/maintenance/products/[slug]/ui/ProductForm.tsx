@@ -1,18 +1,18 @@
 "use client";
 
 import clsx from "clsx";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { createUpdateProduct } from "@/actions/maintenance/create-update-product";
+import { ProductImage } from "@/components";
 import { Category, Product } from "@/interfaces";
-import { ProductImage } from "@prisma/client";
+import { ProductImage as ProductImageInterface } from "@prisma/client";
 
 interface Props {
   product: Product & {
-    ProductImage?: ProductImage[]
+    ProductImage?: ProductImageInterface[]
   };
   categories: {
     id: string;
@@ -31,7 +31,7 @@ interface FormInputs {
   gender: Category;
   categoryId: string;
 
-  // TODO: images
+  images?: FileList;
 }
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -58,6 +58,8 @@ export const ProductForm = ({ product, categories }: Props) => {
       tags: product?.tags?.join(', ') || "",
       gender: product?.gender || "men",
       categoryId: product?.type || "",
+
+      images: undefined
     }
   })
 
@@ -65,7 +67,7 @@ export const ProductForm = ({ product, categories }: Props) => {
 
   const onSubmit = async (data: FormInputs) => {
     const formData = new FormData()
-    const { ...productToSave } = data
+    const { images, ...productToSave } = data
 
     if (product.id) {
       formData.append('id', product.id ?? null)
@@ -79,6 +81,11 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('tags', productToSave.tags)
     formData.append('categoryId', productToSave.categoryId)
     formData.append('gender', productToSave.gender)
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append('images', images[i])
+      }
+    }
 
     const { ok, message, product: savedProduct } = await createUpdateProduct(formData)
     if (!ok) return setErrorMessage(message)
@@ -223,7 +230,8 @@ export const ProductForm = ({ product, categories }: Props) => {
               type="file"
               multiple
               className="p-2 border rounded-md bg-gray-200"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/avif"
+              {...register('images')}
             />
           </div>
 
@@ -231,9 +239,9 @@ export const ProductForm = ({ product, categories }: Props) => {
             {
               product?.ProductImage?.map((image) => (
                 <div key={image.id} className="relative">
-                  <Image
+                  <ProductImage
                     alt={product.title ?? ''}
-                    src={`/products/${image.url}`}
+                    src={image.url}
                     width={300}
                     height={300}
                     className="rounded shadow-md"
