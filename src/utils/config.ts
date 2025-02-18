@@ -3,6 +3,7 @@ const {
   PAYPAL_SECRET: paypalSecret,
   PAYPAL_OAUTH_URL: oAuthUrl,
   PAYPAL_ORDERS_URL: orderDetailUrl,
+  CLOUDINARY_URL: cloudinayUrl
 } = process.env
 
 export const envConfig = () => ({
@@ -10,4 +11,5 @@ export const envConfig = () => ({
   paypalSecret,
   oAuthUrl,
   orderDetailUrl,
+  cloudinayUrl
 })
